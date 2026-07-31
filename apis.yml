@@ -1,7 +1,27 @@
 aid: nickelytics
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nickelytics.png
 name: Nickelytics
-description: Nickelytics is a company surfaced as a portfolio company of techstars and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Nickelytics is a data-driven out-of-home (OOH) and digital-out-of-home (DOOH)
+  advertising platform that turns moving assets into measurable media. It wraps
+  gig-economy and rideshare vehicles, autonomous sidewalk delivery robots, and
+  e-scooters with brand campaigns, then layers geo-targeting, programmatic DOOH
+  buying, route verification, proof-of-play, and performance reporting into a
+  single campaign dashboard. Nickelytics was acquired by Kiwibot for roughly $25M
+  in September 2024 and now operates as the "r-ads" advertising product of
+  Robot.com. It has no public developer API, OpenAPI, or documentation surface;
+  campaign activation runs through an advertiser dashboard rather than an API.
 url: https://raw.githubusercontent.com/api-evangelist/nickelytics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +31,17 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
+- Advertising
+- OOH
+- DOOH
+- Programmatic Advertising
+- Mobility
+- Robotics
+- Rideshare
+- AdTech
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -23,3 +51,16 @@ maintainers:
 common:
 - type: Website
   url: https://nickelytics.com/
+- type: Support
+  url: https://www.robot.com/contact
+- type: TermsOfService
+  url: https://www.robot.com/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.robot.com/privacy-policy
+- type: DomainSecurity
+  url: security/nickelytics-domain-security.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 1
+  pass: local-v1
