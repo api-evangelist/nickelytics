@@ -1,0 +1,48 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Nickelytics R-Ads Platform Authentication API
+  version: 1.0.0
+x-generated: '2026-08-12'
+x-method: generated
+x-source: openapi/nickelytics-rads-auth-openapi.json
+x-note: >-
+  The harvested document is Better Auth's auto-generated schema, served verbatim
+  by the provider. It carries the framework's own identity rather than the
+  provider's, has a single "Default" tag for 151 operations, and leaves 113
+  operations without an operationId (three more are duplicated). This overlay
+  records the corrections API Evangelist applies for discovery without mutating
+  the harvested original.
+extends: openapi/nickelytics-rads-auth-openapi.json
+actions:
+- target: $.info
+  update:
+    title: Nickelytics R-Ads Platform Authentication API
+    x-provider: Nickelytics
+    x-parent-brand: Robot.com
+    x-apievangelist-slug: nickelytics
+    x-framework: Better Auth 1.1.0
+    x-harvested-from: https://api-ads.robot.com/api/auth/open-api/generate-schema
+    x-alternate-host: https://api.nickelytics.com/api/auth
+    x-documentation: none published
+- target: $.servers
+  update:
+    x-alternate-servers:
+    - url: https://api.nickelytics.com/api/auth
+      description: Legacy Nickelytics host, same AWS load balancer as api-ads.robot.com.
+- target: $.info
+  update:
+    x-apievangelist-findings:
+    - id: duplicate-operation-ids
+      detail: getSession, updateUser and listUserSessions each appear on two distinct operations.
+    - id: missing-operation-ids
+      detail: 113 of 151 operations declare no operationId.
+    - id: single-tag
+      detail: every operation carries the single framework tag "Default"; no product grouping.
+    - id: no-idempotency
+      detail: no Idempotency-Key header on any write operation.
+    - id: undeclared-error-code
+      detail: live 401 responses include a `code` field that the schema does not declare.
+- target: $.tags
+  update:
+    x-apievangelist-suggested-tags: [Authentication, Sessions, Accounts, Organizations,
+      Invitations, SSO, Admin, Tokens, Audit Events]

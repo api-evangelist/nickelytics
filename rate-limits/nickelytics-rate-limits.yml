@@ -1,0 +1,25 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Rate limiting demonstrably exists — all 151 operations declare a 429 response
+  with the description "Too Many Requests. You have exceeded the rate limit. Try
+  again later." — but no number, window, scope or response header is published
+  anywhere, and there is no developer documentation to read one from. An agent
+  gets a status code and nothing else: no RateLimit-*, X-RateLimit-* or
+  Retry-After header is declared in the specification, and none was observed on
+  live unauthenticated responses from api-ads.robot.com.
+limit_count: 0
+limits: []
+signaling:
+  status_on_exhaustion: 429
+  status_declared_on_operations: 151
+  response_headers: []
+  retry_after: false
+  documented: false
+evidence:
+- source: openapi/nickelytics-rads-auth-openapi.json
+  detail: 429 response declared on every operation with a rate-limit description
+- url: https://api-ads.robot.com/api/auth/ok
+  status: 200
+  detail: live 200 response carried no RateLimit-*/X-RateLimit-* headers

@@ -1,0 +1,52 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, rubygems.org, crates.io, github.com/Nickelytics,
+  https://www.robot.com/r-advertising
+note: >-
+  No first-party client library exists in any public registry. The npm names
+  `nickelytics`, `r-ads` and `kiwibot` and the PyPI names `nickelytics` and
+  `kiwibot` all 404. `rads-sdk` on npm is a 2023 Figma design-token package by an
+  unrelated author (migueldelmazo) and is explicitly NOT Nickelytics. The
+  github.com/Nickelytics organization holds three repositories, all forks of
+  third-party Cordova/Android/iOS background-geolocation plugins last touched in
+  2021 — telemetry tooling for the vehicle-wrap product, not an API SDK. The
+  github.com/robot-com organization publishes generic backend utilities
+  (better-mqtt, rpc, postgres-schema-tools); none is an R-Ads or Nickelytics API
+  client, so none is recorded here.
+package_count: 0
+official_package_count: 0
+packages: []
+checked_registries:
+- registry: npm
+  names_checked: [nickelytics, r-ads, kiwibot, rads-sdk]
+  result: no first-party package (rads-sdk is unrelated third-party)
+- registry: pypi
+  names_checked: [nickelytics, kiwibot]
+  result: none published
+- registry: rubygems
+  result: none published
+- registry: crates.io
+  result: none published
+source_repositories:
+- url: https://github.com/Nickelytics/cordova-plugin-background-geolocation
+  fork: true
+  official: true
+  language: Java
+  version: null
+  published: '2021-03-27'
+  note: fork of a third-party Cordova plugin; last pushed 2021-03-27, no releases, not a client SDK
+- url: https://github.com/Nickelytics/background-geolocation-android
+  fork: true
+  official: true
+  language: Java
+  version: null
+  published: '2021-02-22'
+  note: fork of a third-party plugin; not a client SDK
+- url: https://github.com/Nickelytics/background-geolocation-ios
+  fork: true
+  official: true
+  language: Objective-C
+  version: null
+  published: '2021-03-05'
+  note: fork of a third-party plugin; not a client SDK

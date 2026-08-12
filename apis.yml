@@ -1,7 +1,7 @@
 aid: nickelytics
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: self-service
   trial: false
   try_now: false
   public: false
@@ -12,16 +12,17 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nickelytics.png
 name: Nickelytics
-description: >-
-  Nickelytics is a data-driven out-of-home (OOH) and digital-out-of-home (DOOH)
-  advertising platform that turns moving assets into measurable media. It wraps
-  gig-economy and rideshare vehicles, autonomous sidewalk delivery robots, and
-  e-scooters with brand campaigns, then layers geo-targeting, programmatic DOOH
-  buying, route verification, proof-of-play, and performance reporting into a
-  single campaign dashboard. Nickelytics was acquired by Kiwibot for roughly $25M
-  in September 2024 and now operates as the "r-ads" advertising product of
-  Robot.com. It has no public developer API, OpenAPI, or documentation surface;
-  campaign activation runs through an advertiser dashboard rather than an API.
+description: Nickelytics is a data-driven out-of-home (OOH) and digital-out-of-home (DOOH) advertising
+  platform that turns moving assets into measurable media. It wraps gig-economy and rideshare vehicles,
+  autonomous sidewalk delivery robots, and e-scooters with brand campaigns, then layers geo-targeting,
+  programmatic DOOH buying, route verification, proof-of-play, and performance reporting into a single
+  campaign dashboard. Nickelytics was acquired by Kiwibot for roughly $25M in September 2024; Kiwibot
+  rebranded to Robot.com in 2025 and Nickelytics now ships as the "R-Ads" advertising product, a self-serve
+  suite covering robot media (RDOOH), vehicle wraps (MOOH) and digital screens (DOOH), bought through
+  the R-Ads Ad Manager at admanager.robot.com. Nickelytics publishes no developer portal, API reference
+  or SDKs. The only machine-readable contract it serves is the platform authentication API — a Better
+  Auth instance whose OpenAPI 3.1.1 document is public at api.nickelytics.com and api-ads.robot.com —
+  while the campaign/reporting surface behind /v1 is authenticated and undocumented.
 url: https://raw.githubusercontent.com/api-evangelist/nickelytics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -31,7 +32,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-12'
 tags:
 - Company
 - Advertising
@@ -42,7 +43,38 @@ tags:
 - Robotics
 - Rideshare
 - AdTech
-apis: []
+- Authentication
+apis:
+- name: Nickelytics R-Ads Platform Authentication API
+  description: The authentication, session, organization and admin API behind the Nickelytics / R-Ads
+    Ad Manager. It is a Better Auth instance whose auto-generated OpenAPI 3.1.1 document is served publicly
+    at /api/auth/open-api/generate-schema on both api.nickelytics.com and api-ads.robot.com (the same
+    AWS load balancer), covering email and social sign-in, sessions, account linking, JWT/JWKS issuance,
+    organizations, teams, invitations, SSO providers, admin user management and audit events. It is a
+    framework-generated auth surface, not a documented advertising product API — the campaign and reporting
+    surface at /v1 answers 401 "Authorization header required" and publishes no specification.
+  humanURL: https://www.robot.com/r-advertising
+  baseURL: https://api-ads.robot.com/api/auth
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nickelytics.png
+  tags:
+  - Authentication
+  - Identity
+  - Advertising
+  properties:
+  - type: Authentication
+    url: authentication/nickelytics-authentication.yml
+  - type: ErrorCatalog
+    url: errors/nickelytics-problem-types.yml
+  - type: DataModel
+    url: data-model/nickelytics-data-model.yml
+  - type: Conventions
+    url: conventions/nickelytics-conventions.yml
+  - type: Overlay
+    url: overlays/nickelytics-rads-auth-overlay.yaml
+  - type: MCPServer
+    url: mcp/nickelytics-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/nickelytics-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -57,10 +89,56 @@ common:
   url: https://www.robot.com/terms-of-use
 - type: PrivacyPolicy
   url: https://www.robot.com/privacy-policy
+- type: SignUp
+  url: https://admanager.robot.com/
+- type: Blog
+  url: https://robots.nickelytics.com/blogs/
+- type: GitHubOrganization
+  url: https://github.com/Nickelytics
 - type: DomainSecurity
   url: security/nickelytics-domain-security.yml
+- type: WellKnown
+  url: well-known/nickelytics-well-known.yml
+- type: LLMsTxt
+  url: llms/nickelytics-llms.txt
+- type: Conformance
+  url: conformance/nickelytics-conformance.yml
+- type: Lifecycle
+  url: lifecycle/nickelytics-lifecycle.yml
+- type: Packages
+  url: packages/nickelytics-packages.yml
+- type: Plans
+  url: plans/nickelytics-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/nickelytics-rate-limits.yml
+- type: AgentSkill
+  url: skills/_index.yml
 x-enrichment:
-  date: '2026-07-20'
-  status: minimal
-  artifacts_added: 1
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 19
   pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: One real machine-readable contract was found and harvested — the R-Ads platform authentication
+    OpenAPI 3.1.1 served at /api/auth/open-api/generate-schema on both api.nickelytics.com and api-ads.robot.com.
+    The advertising product surface at https://api.nickelytics.com/v1 exists but answers 401 with no published
+    specification and no developer portal.
+  evidence:
+  - url: https://api-ads.robot.com/api/auth/open-api/generate-schema
+    status: 200
+  - url: https://api.nickelytics.com/api/auth/open-api/generate-schema
+    status: 200
+  - url: https://api-ads.robot.com/api/auth/.well-known/jwks.json
+    status: 200
+  - url: https://api.nickelytics.com/v1
+    status: 401
+  - url: https://nickelytics.com/
+    status: 404
+  checked: '2026-08-12'
+x-provenance-note: 'openapi/nickelytics-rads-auth-openapi.json was removed 2026-08-12: it is a generic
+  ''Better Auth'' spec served from https://api-ads.robot.com, a domain this repo cannot tie to Nickelytics.
+  nickelytics.com returns HTTP 404, so there is no provider documentation to justify the host. Per the
+  enrichment pipeline''s STEP 0c ownership check, an unjustifiable contract is not saved. Recorded rather
+  than silently dropped.'

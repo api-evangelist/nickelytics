@@ -1,0 +1,78 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Derived from the published OpenAPI plus live unauthenticated probes. Nickelytics
+  / R-Ads publishes no developer documentation, so nothing here is a provider
+  statement of intent — it is what the served contract and the live edge do.
+authentication:
+  styles:
+  - type: http
+    scheme: bearer
+    header: Authorization
+    description: Bearer token authentication (declared as the default security requirement).
+  - type: apiKey
+    in: cookie
+    name: apiKeyCookie
+    description: Session cookie issued on sign-in.
+  applied: all 151 operations carry a security requirement
+  jwt: true
+  jwks_url: https://api-ads.robot.com/api/auth/.well-known/jwks.json
+  jwt_algorithm: EdDSA (Ed25519), per the served JWKS
+  see_also: authentication/nickelytics-authentication.yml
+idempotency:
+  supported: false
+  evidence: >-
+    No Idempotency-Key header, parameter or extension appears anywhere in the
+    OpenAPI, and no documentation describes retry semantics. Retrying a POST is
+    not safe.
+pagination:
+  supported: partial
+  style: offset
+  evidence: >-
+    Exactly one of the 151 operations declares pagination: GET /admin/list-users
+    (operationId listUsers) accepts limit, offset, sortBy, sortDirection plus
+    search and filter parameters. Every other list operation returns an
+    unpaginated array. No cursor, no next/prev links, no page-metadata schema.
+  parameters: [limit, offset, sortBy, sortDirection, searchValue, searchField, searchOperator,
+    filterField, filterValue, filterOperator]
+  operations: [listUsers]
+field_expansion:
+  supported: false
+sparse_fields:
+  supported: false
+metadata:
+  supported: true
+  fields:
+  - entity: Organization
+    field: metadata
+    type: string
+request_tracing:
+  request_id_header: none
+  evidence: No X-Request-Id / request-id header is declared or returned.
+versioning:
+  scheme: none-declared
+  spec_version: 1.1.0
+  note: >-
+    The OpenAPI `info.version` is the Better Auth framework version, not an API
+    version. The auth surface is mounted at /api/auth with no version segment.
+    A separate, undocumented product surface exists at /v1.
+  see_also: lifecycle/nickelytics-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{"message": "string"}'
+  rfc9457: false
+  see_also: errors/nickelytics-problem-types.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  response_headers: none declared
+  documented_limits: false
+  see_also: rate-limits/nickelytics-rate-limits.yml
+content_negotiation:
+  request: application/json
+  response: application/json
+transport:
+  base_url: https://api-ads.robot.com/api/auth
+  alternate_base_url: https://api.nickelytics.com/api/auth
+  tls: TLSv1.2
+  hsts: false

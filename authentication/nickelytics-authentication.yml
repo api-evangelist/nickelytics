@@ -1,0 +1,23 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - cookie
+schemes:
+- name: apiKeyCookie
+  type: apiKey
+  in: cookie
+  parameter: apiKeyCookie
+  description: API Key authentication via cookie
+  sources:
+  - openapi/nickelytics-rads-auth-openapi.json
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token authentication
+  sources:
+  - openapi/nickelytics-rads-auth-openapi.json

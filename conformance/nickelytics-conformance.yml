@@ -1,0 +1,63 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json, well-known/nickelytics-well-known.yml
+note: >-
+  Nickelytics / R-Ads publishes no compliance claims, certifications or trust
+  center, so nothing here is a provider assertion. Every entry is derived from
+  the served contract and live probes.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/nickelytics-rads-auth-openapi.json declares openapi 3.1.1 with 149 paths / 151 operations
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme is declared; social sign-in is brokered server-side via /sign-in/social and /callback/{id}
+- id: oidc-discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every host
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on every host
+- id: rfc7517-jwks
+  conforms: true
+  evidence: https://api-ads.robot.com/api/auth/.well-known/jwks.json returns 200 with an EdDSA/Ed25519 OKP key
+- id: rfc7519-jwt
+  conforms: true
+  evidence: /token and /get-access-token issue JWTs signed by the published JWKS
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a bare {"message"} JSON envelope, not application/problem+json
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on nickelytics.com, robot.com, admanager.robot.com and both API hosts
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no Sunset or Deprecation header and no deprecation policy published
+- id: rfc8615-well-known-uris
+  conforms: partial
+  evidence: a JWKS is served, but under the /api/auth mount point rather than the host root
+- id: idempotency-key
+  conforms: false
+  evidence: no Idempotency-Key header or parameter anywhere in the specification
+- id: saml-sso
+  conforms: true
+  evidence: >-
+    POST /dash/organization/{id}/sso-provider/create accepts a samlConfig block
+    (idpMetadata.metadataUrl, entryPoint, cert, entityId, attribute mapping) and
+    the surface includes domain verification operations
+- id: scim
+  conforms: false
+  evidence: no /Users or /Groups SCIM 2.0 paths; user provisioning is proprietary (/dash/create-user, /dash/list-users)
+- id: asyncapi
+  conforms: false
+  evidence: no event, webhook or streaming surface is published
+- id: a2a
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on every host
+compliance_program:
+  published: false
+  certifications: []
+  evidence: >-
+    robot.com/security, robot.com/trust and trust.robot.com do not resolve or
+    404; probe-security-programs.py found no trust center and no vulnerability
+    disclosure program.

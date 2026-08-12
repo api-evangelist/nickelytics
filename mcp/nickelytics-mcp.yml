@@ -1,0 +1,77 @@
+generated: '2026-08-12'
+method: derived
+status: candidate
+source: openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Nickelytics / R-Ads operates NO Model Context Protocol server. No /mcp
+  endpoint answers on api-ads.robot.com or api.nickelytics.com, no server is
+  listed in any MCP registry, and the company publishes no agent documentation.
+  This file is a DERIVED CANDIDATE only: the tools below are a proposed mapping
+  of the operations the published auth OpenAPI actually declares, so the shape is
+  on record if the provider ever ships one. Every source_operation is a real
+  operationId verified in the specification. The tool set is deliberately
+  restricted to the 38 operations that carry an operationId — the other 113
+  operations in the spec have none.
+server:
+  name: nickelytics-rads-auth
+  transport: http
+  url: null
+  status: not published
+  probes:
+  - url: https://api-ads.robot.com/mcp
+    status: 404
+  - url: https://api.nickelytics.com/v1
+    status: 401
+tools:
+- name: get_session
+  description: Return the currently authenticated session and its user.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#getSession
+- name: sign_in_email
+  description: Sign in with email and password.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#signInEmail
+- name: sign_up_email
+  description: Create an R-Ads account with email and password.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#signUpWithEmailAndPassword
+- name: sign_out
+  description: Sign out and invalidate the current session.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#signOut
+- name: list_sessions
+  description: List the authenticated user's active sessions.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#listUserSessions
+- name: list_accounts
+  description: List the linked credential and social accounts for the current user.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#listUserAccounts
+- name: update_user
+  description: Update the authenticated user's profile.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#updateUser
+- name: change_password
+  description: Change the authenticated user's password.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#changePassword
+- name: request_password_reset
+  description: Send a password reset email.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#requestPasswordReset
+- name: get_organization
+  description: Return the full organization (advertiser workspace) including members and invitations.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#getOrganization
+- name: set_active_organization
+  description: Set the active organization on the current session.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#setActiveOrganization
+- name: invite_member
+  description: Invite an email address to join an organization with a role.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#createOrganizationInvitation
+- name: update_member_role
+  description: Change a member's role within an organization.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#updateOrganizationMemberRole
+- name: list_users
+  description: Admin — list platform users with search, filter, sort and offset pagination.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#listUsers
+- name: get_jwks
+  description: Fetch the platform JSON Web Key Set used to verify issued tokens.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#getJSONWebKeySet
+- name: get_jwt
+  description: Mint a JSON Web Token for the current session.
+  source_operation: openapi/nickelytics-rads-auth-openapi.json#getJSONWebToken
+coverage:
+  operations_in_spec: 151
+  operations_with_operation_id: 38
+  candidate_tools: 16

@@ -1,0 +1,135 @@
+generated: '2026-08-12'
+method: derived
+source: mcp/nickelytics-mcp.yml, openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  There is no live MCP server and no GraphQL surface, so this crosswalk binds the
+  DERIVED candidate tool set to its backing OpenAPI operations. Confidence is
+  high on every row because each tool was derived directly from the operation it
+  names — nothing here was matched by guesswork. mcp_only[] is empty by
+  construction. The interesting column is rest_only: 113 of the 151 published
+  operations carry no operationId at all, so they cannot be bound to a named
+  tool without the provider fixing the specification.
+surfaces:
+  openapi:
+    file: openapi/nickelytics-rads-auth-openapi.json
+    source: https://api-ads.robot.com/api/auth/open-api/generate-schema
+    gated: false
+  graphql:
+    endpoint: null
+    note: https://api-ads.robot.com/graphql returns 404
+  mcp:
+    url: null
+    note: no MCP server published; https://api-ads.robot.com/mcp returns 404
+  product_api:
+    endpoint: https://api.nickelytics.com/v1
+    gated: true
+    note: returns 401 "Authorization header required"; no specification published
+crosswalk:
+- tool: get_session
+  category: session
+  rest: [getSession]
+  binding: rest
+  confidence: high
+  note: getSession is declared twice (GET and POST /get-session) with the same operationId.
+- tool: sign_in_email
+  category: authentication
+  rest: [signInEmail]
+  binding: rest
+  confidence: high
+- tool: sign_up_email
+  category: authentication
+  rest: [signUpWithEmailAndPassword]
+  binding: rest
+  confidence: high
+- tool: sign_out
+  category: session
+  rest: [signOut]
+  binding: rest
+  confidence: high
+- tool: list_sessions
+  category: session
+  rest: [listUserSessions]
+  binding: rest
+  confidence: medium
+  note: listUserSessions is reused for GET /list-sessions and POST /admin/list-user-sessions — a duplicate operationId, so the binding is ambiguous in the spec as published.
+- tool: list_accounts
+  category: account
+  rest: [listUserAccounts]
+  binding: rest
+  confidence: high
+- tool: update_user
+  category: user
+  rest: [updateUser]
+  binding: rest
+  confidence: medium
+  note: updateUser is reused for POST /update-user and POST /admin/update-user — duplicate operationId.
+- tool: change_password
+  category: credential
+  rest: [changePassword]
+  binding: rest
+  confidence: high
+- tool: request_password_reset
+  category: credential
+  rest: [requestPasswordReset]
+  binding: rest
+  confidence: high
+- tool: get_organization
+  category: organization
+  rest: [getOrganization]
+  binding: rest
+  confidence: high
+- tool: set_active_organization
+  category: organization
+  rest: [setActiveOrganization]
+  binding: rest
+  confidence: high
+- tool: invite_member
+  category: organization
+  rest: [createOrganizationInvitation]
+  binding: rest
+  confidence: high
+- tool: update_member_role
+  category: organization
+  rest: [updateOrganizationMemberRole]
+  binding: rest
+  confidence: high
+- tool: list_users
+  category: admin
+  rest: [listUsers]
+  binding: rest
+  confidence: high
+- tool: get_jwks
+  category: token
+  rest: [getJSONWebKeySet]
+  binding: rest
+  confidence: high
+- tool: get_jwt
+  category: token
+  rest: [getJSONWebToken]
+  binding: rest
+  confidence: high
+mcp_only: []
+rest_only:
+- capability: admin user management
+  operations: [setUserRole, getUser, createUser, banUser, unbanUser, impersonateUser,
+    revokeUserSession, revokeUserSessions, removeUser, setUserPassword]
+  reason: destructive or privileged; deliberately excluded from the candidate tool set
+- capability: account lifecycle
+  operations: [socialSignIn, linkSocialAccount, resetPassword, verifyPassword, sendVerificationEmail,
+    changeEmail, deleteUser, updateSession, resetPasswordCallback]
+  reason: browser-redirect or email-callback flows an agent cannot complete unattended
+- capability: unnamed operations
+  operations: []
+  count: 113
+  reason: >-
+    113 of the 151 operations — the entire /dash/* admin console surface, the
+    /organization/* remainder, /events/* audit logs, SSO provider management and
+    log drains — declare no operationId, so they have no stable identifier to
+    bind a tool to.
+coverage:
+  tools_named: 16
+  tools_bound: 16
+  mcp_only: 0
+  rest_operations_total: 151
+  rest_operations_with_operation_id: 38
+  rest_operations_with_a_tool: 16

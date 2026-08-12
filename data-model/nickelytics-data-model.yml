@@ -1,0 +1,99 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Derived from components.schemas and their id-reference fields. This is the
+  identity/tenancy core of the R-Ads platform (Better Auth's data model plus the
+  organization, admin and SSO plugins). It is NOT the advertising domain model —
+  campaigns, placements, creatives, robots and proof-of-play live behind the
+  authenticated /v1 surface, which publishes no schema.
+entities:
+- name: User
+  description: An R-Ads Ad Manager account holder.
+  fields: [id, name, email, emailVerified, image, createdAt, updatedAt, role, banned,
+    banReason, banExpires, lastActiveAt, firstName, lastName]
+  required: [name, email, createdAt, updatedAt, firstName, lastName]
+- name: Session
+  description: An authenticated browser/API session, optionally scoped to an active organization.
+  fields: [id, expiresAt, token, createdAt, updatedAt, ipAddress, userAgent, userId,
+    impersonatedBy, activeOrganizationId]
+  required: [expiresAt, token, createdAt, updatedAt, userId]
+- name: Account
+  description: A credential or linked social/SSO provider account for a user.
+  fields: [id, accountId, providerId, userId, accessToken, refreshToken, idToken, accessTokenExpiresAt,
+    refreshTokenExpiresAt, scope, password, createdAt, updatedAt]
+  required: [accountId, providerId, userId, createdAt, updatedAt]
+- name: Verification
+  description: A short-lived verification token (email verification, password reset).
+  fields: [id, identifier, value, expiresAt, createdAt, updatedAt]
+  required: [identifier, value, expiresAt, createdAt, updatedAt]
+- name: Organization
+  description: A tenant — an advertiser or agency workspace in the Ad Manager.
+  fields: [id, name, slug, logo, createdAt, metadata]
+  required: [name, slug, createdAt]
+- name: Member
+  description: A user's membership and role within an organization.
+  fields: [id, organizationId, userId, role, createdAt]
+  required: [organizationId, userId, role, createdAt]
+- name: Invitation
+  description: A pending invitation for an email address to join an organization.
+  fields: [id, organizationId, email, role, status, expiresAt, createdAt, inviterId]
+  required: [organizationId, email, status, expiresAt, createdAt, inviterId]
+- name: Jwks
+  description: A JSON Web Key used to sign platform JWTs; the public half is served at /api/auth/.well-known/jwks.json.
+  fields: [id, publicKey, privateKey, createdAt, expiresAt]
+  required: [publicKey, privateKey, createdAt]
+relationships:
+- from: Session
+  to: User
+  type: belongs_to
+  via: userId
+- from: Session
+  to: User
+  type: belongs_to
+  via: impersonatedBy
+  note: Set only when an admin is impersonating (POST /admin/impersonate-user).
+- from: Session
+  to: Organization
+  type: belongs_to
+  via: activeOrganizationId
+- from: Account
+  to: User
+  type: belongs_to
+  via: userId
+- from: Member
+  to: Organization
+  type: belongs_to
+  via: organizationId
+- from: Member
+  to: User
+  type: belongs_to
+  via: userId
+- from: Invitation
+  to: Organization
+  type: belongs_to
+  via: organizationId
+- from: Invitation
+  to: User
+  type: belongs_to
+  via: inviterId
+- from: User
+  to: Session
+  type: has_many
+  via: userId
+- from: User
+  to: Account
+  type: has_many
+  via: userId
+- from: Organization
+  to: Member
+  type: has_many
+  via: organizationId
+- from: Organization
+  to: Invitation
+  type: has_many
+  via: organizationId
+summary:
+  entities: 8
+  relationships: 12
+  id_prefixes: none published

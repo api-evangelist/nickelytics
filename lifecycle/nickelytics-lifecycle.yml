@@ -1,0 +1,51 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.robot.com/ , https://www.robot.com/r-advertising ,
+  https://nickelytics.com/ , openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Nickelytics publishes no developer portal, so there is no versioning policy,
+  deprecation policy, SLA or status page to capture. Recorded as measured
+  absences, not omissions. The most consequential lifecycle fact is the
+  company's own: Nickelytics was acquired by Kiwibot in September 2024, Kiwibot
+  rebranded to Robot.com in 2025, and the product now ships as R-Ads — the
+  nickelytics.com web root itself returns 404 while the API host,
+  api.nickelytics.com, is still live on the same load balancer as
+  api-ads.robot.com.
+versioning:
+  scheme: none-declared
+  current: null
+  docs: null
+  evidence: >-
+    The auth surface is mounted at /api/auth with no version segment; info.version
+    1.1.0 is the Better Auth framework version. An undocumented /v1 product
+    surface exists on the same host (401 Authorization header required).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  evidence: no Sunset/Deprecation header, RFC 8594 support or policy page found
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  evidence: status.robot.com and status.nickelytics.com do not resolve (DNS NXDOMAIN)
+changelog:
+  url: null
+  evidence: no dated changelog or release-notes page on robot.com or nickelytics.com
+deprecated_operations: []
+brand_lifecycle:
+- date: '2024-09'
+  event: Nickelytics acquired by Kiwibot for approximately $25M.
+- date: '2025-10'
+  event: Kiwibot rebrands to Robot.com.
+- date: '2026-05'
+  event: Robot.com launches R-Ads, the self-serve robot/vehicle/screen advertising suite that carries the Nickelytics product forward.
+evidence:
+- url: https://status.robot.com/
+  status: 0
+  note: DNS does not resolve
+- url: https://www.robot.com/pricing
+  status: 404
+- url: https://nickelytics.com/
+  status: 404

@@ -1,0 +1,21 @@
+generated: '2026-08-12'
+method: generated
+source: openapi/nickelytics-rads-auth-openapi.json
+note: >-
+  Nickelytics / R-Ads publishes no AGENTS.md or provider-authored skills. These
+  are generated from the one specification the company serves publicly — the
+  R-Ads platform authentication API — and every operationId referenced was
+  verified verbatim in that document. There are no skills for the advertising
+  product itself because the campaign surface at /v1 is authenticated and
+  undocumented.
+skills:
+- file: nickelytics-authenticate-and-scope-session.md
+  name: Authenticate to the R-Ads platform and scope a session to an advertiser
+  api: openapi/nickelytics-rads-auth-openapi.json
+  operations: [signInEmail, getSession, setActiveOrganization, getJSONWebToken, getJSONWebKeySet,
+    signOut]
+- file: nickelytics-manage-advertiser-organization.md
+  name: Manage an R-Ads advertiser organization and its members
+  api: openapi/nickelytics-rads-auth-openapi.json
+  operations: [getSession, setActiveOrganization, getOrganization, createOrganizationInvitation,
+    updateOrganizationMemberRole]

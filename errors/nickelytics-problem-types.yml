@@ -1,0 +1,65 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/nickelytics-rads-auth-openapi.json
+format: custom
+note: >-
+  Not RFC 9457. The R-Ads auth API returns a flat JSON envelope with a single
+  required `message` string; no `application/problem+json`, no `type` URI, no
+  `instance`. Live probes show some responses additionally carry a machine
+  code (`{"message":"Unauthorized","code":"UNAUTHORIZED"}` from
+  GET /api/auth/token), but `code` is not declared in the specification, so an
+  agent cannot rely on it. The same six status codes are declared on all 151
+  operations, so these are API-wide, not per-operation.
+envelope:
+  media_type: application/json
+  fields:
+  - name: message
+    type: string
+    required: true
+    description: Human-readable error message.
+  - name: code
+    type: string
+    required: false
+    description: >-
+      Observed on live responses (e.g. UNAUTHORIZED) but undeclared in the
+      OpenAPI; treat as best-effort.
+problems:
+- status: 400
+  title: Bad Request
+  detail: Usually due to missing parameters, or invalid parameters.
+  operations: 151
+- status: 401
+  title: Unauthorized
+  detail: Due to missing or invalid authentication.
+  operations: 151
+  observed:
+    body: '{"message":"Unauthorized","code":"UNAUTHORIZED"}'
+    source: https://api-ads.robot.com/api/auth/token
+- status: 403
+  title: Forbidden
+  detail: >-
+    You do not have permission to access this resource or to perform this
+    action.
+  operations: 151
+- status: 404
+  title: Not Found
+  detail: The requested resource was not found.
+  operations: 151
+- status: 429
+  title: Too Many Requests
+  detail: You have exceeded the rate limit. Try again later.
+  operations: 151
+  see_also: rate-limits/nickelytics-rate-limits.yml
+- status: 500
+  title: Internal Server Error
+  detail: Server error.
+  operations: 151
+- status: 422
+  title: Unprocessable Entity
+  detail: Declared on a single operation only.
+  operations: 1
+coverage:
+  operations_total: 151
+  operations_with_4xx: 151
+  operations_with_5xx: 151
+  distinct_error_shapes: 1

@@ -1,0 +1,22 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.robot.com/r-advertising
+note: >-
+  No published plans, tiers or rate card. robot.com/pricing returns 404 and the
+  R-Ads product pages route every commercial path to a contact form
+  (robot.com/contact) or to the R-Ads Ad Manager sign-up at
+  admanager.robot.com, which requires an account before any pricing is shown.
+  Media pricing is quoted per campaign (CPM / per-mile impressions), not
+  published. There is no API pricing at all, because there is no public API
+  program.
+plan_count: 0
+plans: []
+signup: https://admanager.robot.com/
+contact: https://www.robot.com/contact
+evidence:
+- url: https://www.robot.com/pricing
+  status: 404
+- url: https://www.robot.com/r-advertising
+  status: 200
+- url: https://admanager.robot.com/
+  status: 200
