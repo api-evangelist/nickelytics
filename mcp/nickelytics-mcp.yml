@@ -2,16 +2,13 @@ generated: '2026-08-12'
 method: derived
 status: candidate
 source: openapi/nickelytics-rads-auth-openapi.json
-note: >-
-  Nickelytics / R-Ads operates NO Model Context Protocol server. No /mcp
-  endpoint answers on api-ads.robot.com or api.nickelytics.com, no server is
-  listed in any MCP registry, and the company publishes no agent documentation.
-  This file is a DERIVED CANDIDATE only: the tools below are a proposed mapping
-  of the operations the published auth OpenAPI actually declares, so the shape is
-  on record if the provider ever ships one. Every source_operation is a real
-  operationId verified in the specification. The tool set is deliberately
-  restricted to the 38 operations that carry an operationId — the other 113
-  operations in the spec have none.
+note: 'Nickelytics / R-Ads operates NO Model Context Protocol server. No /mcp endpoint answers on api-ads.robot.com
+  or api.nickelytics.com, no server is listed in any MCP registry, and the company publishes no agent
+  documentation. This file is a DERIVED CANDIDATE only: the tools below are a proposed mapping of the
+  operations the published auth OpenAPI actually declares, so the shape is on record if the provider ever
+  ships one. Every source_operation is a real operationId verified in the specification. The tool set
+  is deliberately restricted to the 38 operations that carry an operationId — the other 113 operations
+  in the spec have none.'
 server:
   name: nickelytics-rads-auth
   transport: http
@@ -75,3 +72,9 @@ coverage:
   operations_in_spec: 151
   operations_with_operation_id: 38
   candidate_tools: 16
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census
