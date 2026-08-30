@@ -92,6 +92,11 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/kiwibot/
+  name: Kiwibot
+  x-relationship: acquired
+  x-evidence: "Nickelytics was acquired by Kiwibot for roughly $25M in September 2024; Kiwibot rebranded to Robot."
 - type: Website
   url: https://nickelytics.com/
 - type: Support
